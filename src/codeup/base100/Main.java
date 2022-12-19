@@ -5,15 +5,66 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/**
+ * 100번째 문제
+ */
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int a = Integer.parseInt(st.nextToken());
-        int b = Integer.parseInt(st.nextToken());
-        int c = Integer.parseInt(st.nextToken());
+        StringTokenizer st;
+        int[][] arr = new int[11][11];
+        int row = 2;
+        int col = 2;
+        int chk = 0;
 
-        System.out.printf("%d", (a < b ? a : b) < c ? (a < b ? a : b) : c );
+        for (int i = 1; i <= 10; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            for (int j = 1; j <= 10; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+
+        while (true) {
+            if (arr[row][col] == 2) {
+                arr[row][col] = 9;
+                break;
+            }
+
+            if (chk == 0) {
+                arr[row][col] = 9;
+                chk++;
+            }
+
+            if (arr[row][col + 1] == 0) {
+                col++;
+            } else if (arr[row][col + 1] == 2) {
+                col++;
+                arr[row][col] = 9;
+                break;
+            } else {
+                if (arr[row + 1][col] == 0) {
+                    row++;
+                } else if (arr[row + 1][col] == 2) {
+                    row++;
+                    arr[row][col] = 9;
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+            arr[row][col] = 9;
+        }
+
+        for (int i = 1; i <= 10; i++) {
+            for (int j = 1; j <= 10; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+
     }
 }
 
