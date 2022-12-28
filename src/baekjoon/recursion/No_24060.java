@@ -7,19 +7,18 @@ import java.util.StringTokenizer;
 
 public class No_24060 {
 
-    static int[] arr;
     static int[] tmp;
     static long k;
-    static long cnt = 1;
+    static long cnt = 0;
     static int result = -1;
-    static int i, j , q, t;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         k = Long.parseLong(st.nextToken());
-        arr = new int[n];
+        int[] arr = new int[n];
+        tmp = new int[n];
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
@@ -35,7 +34,7 @@ public class No_24060 {
     public static void merge_sort(int[] arr, int p, int r) {
 
         if (p < r) {
-            q = (p + r) / 2;
+            int q = (p + r) / 2;
             merge_sort(arr, p, q);
             merge_sort(arr, q + 1, r);
             merge(arr, p, q, r);
@@ -43,10 +42,9 @@ public class No_24060 {
     }
 
     public static void merge(int[] arr, int p, int q, int r) {
-        i = p;
-        j = q + 1;
-        t = 0;
-        tmp = new int[arr.length];
+        int i = p;
+        int j = q + 1;
+        int t = 0;
 
         while (i <= q && j <= r) {
             if (arr[i] <= arr[j]) {
@@ -68,11 +66,12 @@ public class No_24060 {
         t = 0;
 
         while (i <= r) {
+            cnt++;
             if (cnt == k) {
                 result = tmp[t];
+                break;
             }
             arr[i++] = tmp[t++];
-            cnt++;
         }
     }
 }
