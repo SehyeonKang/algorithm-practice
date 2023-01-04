@@ -7,61 +7,67 @@ import java.util.StringTokenizer;
 
 public class No_1012 {
 
-    static int M, N, K;
-    static int[][] cabbage;
-    static boolean[][] visit;
-    static int count;
-    static int[] dx = { 0, -1, 0, 1 };
-    static int[] dy = { 1, 0, -1, 0 };
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    static int[][] map;
+    static boolean[][] visited;
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
+    static int insectNum, M, N, K;
+    public static void main(String[] args) throws IOException {
+        int cases = Integer.parseInt(br.readLine());
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int tc = Integer.parseInt(br.readLine());
+        for (int i = 0; i < cases; i++) {
+            st = new StringTokenizer(br.readLine());
 
-        for (int i = 0; i < tc; i++) {
-            count = 0;
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
             M = Integer.parseInt(st.nextToken());
             N = Integer.parseInt(st.nextToken());
-            cabbage = new int[M][N];
-            visit = new boolean[M][N];
-
             K = Integer.parseInt(st.nextToken());
+
+            map = new int[M][N];
+            visited = new boolean[M][N];
+
+            int x, y;
             for (int j = 0; j < K; j++) {
-                st = new StringTokenizer(br.readLine(), " ");
-                int p1 = Integer.parseInt(st.nextToken());
-                int p2 = Integer.parseInt(st.nextToken());
-                cabbage[p1][p2] = 1;
+                st = new StringTokenizer(br.readLine());
+
+                x = Integer.parseInt(st.nextToken());
+                y = Integer.parseInt(st.nextToken());
+
+                map[x][y] = 1;
             }
 
-            for (int x = 0; x < M; x++) {
-                for (int y = 0; y < N; y++) {
-                    if (cabbage[x][y] == 1 && !visit[x][y]) {
-                        dfs(x, y);
-                        count++;
+            insectNum = 0;
+            for (int j = 0; j < M; j++) {
+                for (int k = 0; k < N; k++) {
+
+                    if (map[j][k] == 1 && !visited[j][k]) {
+                        insectNum++;
+                        dfs(j, k);
                     }
                 }
             }
 
-            System.out.println(count);
+            sb.append(insectNum).append("\n");
         }
 
+        System.out.println(sb);
     }
 
     private static void dfs(int x, int y) {
-        visit[x][y] = true;
+        visited[x][y] = true;
 
         for (int i = 0; i < 4; i++) {
-            int cx = x + dx[i];
-            int cy = y + dy[i];
+            int newX = x + dx[i];
+            int newY = y + dy[i];
 
-            if (cx >= 0 && cy >= 0 && cx < M && cy < N) {
-                if (!visit[cx][cy] && cabbage[cx][cy] == 1) {
-                    dfs(cx, cy);
+            if (newX >= 0 && newY >= 0 && newX < M && newY < N) {
+                if (map[newX][newY] == 1 && !visited[newX][newY]) {
+                    dfs(newX, newY);
                 }
             }
-
         }
     }
 }
