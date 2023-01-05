@@ -5,63 +5,57 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class No_1697 {
 
-    static int N;
-    static int K;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
 
-    static int visited[] = new int[100001];
+    static int N, K;
+    static int[] walk = {-1, 1};
+    static int[] road = new int[100001];
 
-    // X-1, X+1
-    // 2*X
-    public static void main(String[] args) throws IOException
-    {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        st = new StringTokenizer(br.readLine());
 
-        String input = br.readLine();
-        String[] inputs = input.split(" ");
+        N = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
 
-        N = Integer.valueOf(inputs[0]);
-        K = Integer.valueOf(inputs[1]);
+        int seconds = bfs(N);
 
-        int result = bfs(N);
-        System.out.println(result);
+        System.out.println(seconds);
     }
 
-    private static int  bfs(int node)
-    {
-        Queue<Integer> queue = new LinkedList<Integer>();
+    private static int bfs(int N) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(N);
+        int dest = K;
+        road[N] = 0;
 
-        queue.add(node);
-        int index = node;
-        int n = 0;
-        visited[index] = 1;
-        while (queue.isEmpty() == false)
-        {
-            n = queue.remove();
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
 
-            if (n == K)
-            {
-                return visited[n]-1;
-            }
+            for (int i = 0; i < 3; i++) {
+                int newNode;
 
-            if (n-1>=0 && visited[n-1] == 0)
-            {
-                visited[n-1] = visited[n]+1;
-                queue.add(n-1);
-            }
-            if (n+1 <= 100000 && visited[n+1] == 0)
-            {
-                visited[n+1] = visited[n]+1;
-                queue.add(n+1);
-            }
-            if (2*n <= 100000 && visited[2*n] == 0)
-            {
-                visited[2*n] = visited[n] + 1;
-                queue.add(2*n);
+                if (i < 2) {
+                    newNode = node + walk[i];
+                } else
+                    newNode = node * 2;
+
+                if (newNode >= 0 && newNode <= 100000) {
+                    if (road[newNode] == 0 && newNode != N) {
+                        queue.add(newNode);
+                        road[newNode] = road[node] + 1;
+
+                        if (newNode == dest)
+                            return road[newNode];
+                    }
+                }
             }
         }
-        return -1;
+
+        return 0;
     }
 }

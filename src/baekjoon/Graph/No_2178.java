@@ -9,54 +9,59 @@ import java.util.StringTokenizer;
 
 public class No_2178 {
 
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
+
+    static int N, M;
     static int[][] map;
-    static int n;
-    static int m;
     static boolean[][] visited;
-    static int[] dx = { -1, 1, 0, 0 }; //x방향배열-상하
-    static int[] dy = { 0, 0, -1, 1 }; //y방향배열-좌우
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
 
-        map = new int[n][m];
-        for(int i=0; i<n; i++) {
-            String s = br.readLine();
-            for(int j=0; j<m; j++) {
-                map[i][j] = s.charAt(j) - '0';
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        map = new int[N][M];
+        visited = new boolean[N][M];
+        for (int i = 0; i < N; i++) {
+            char[] c = br.readLine().toCharArray();
+
+            for (int j = 0; j < M; j++) {
+                map[i][j] = Character.getNumericValue(c[j]);
             }
         }
 
-        visited = new boolean[n][m];
-        visited[0][0] = true;
         bfs(0, 0);
-        System.out.println(map[n-1][m-1]);
+
+        System.out.println(map[N - 1][M - 1]);
+
     }
 
     public static void bfs(int x, int y) {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] {x,y});
+        Queue<Integer[]> queue = new LinkedList<>();
+        queue.offer(new Integer[] {x, y});
+        visited[x][y] = true;
 
-        while(!q.isEmpty()) {
-            int now[] = q.poll();
-            int nowX = now[0];
-            int nowY = now[1];
+        while (!queue.isEmpty()) {
+            Integer[] arr = queue.poll();
+            x = arr[0];
+            y = arr[1];
 
-            for(int i=0; i<4; i++) {
-                int nextX = nowX + dx[i];
-                int nextY = nowY + dy[i];
+            for (int i = 0; i < 4; i++) {
+                int newX = x + dx[i];
+                int newY = y + dy[i];
 
-                if (nextX < 0 || nextY < 0 || nextX >= n || nextY >= m)
-                    continue;
-                if (visited[nextX][nextY] || map[nextX][nextY] == 0)
-                    continue;
-
-                q.add(new int[] {nextX, nextY});
-                map[nextX][nextY] = map[nowX][nowY] + 1;
-                visited[nextX][nextY] = true;
+                if (newX >= 0 && newY >= 0 && newX < N && newY < M) {
+                    if (!visited[newX][newY] && map[newX][newY] != 0) {
+                        visited[newX][newY] = true;
+                        queue.offer(new Integer[]{newX, newY});
+                        map[newX][newY] = map[x][y] + 1;
+                    }
+                }
             }
         }
     }
