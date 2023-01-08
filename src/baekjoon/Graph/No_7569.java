@@ -85,6 +85,6 @@ public class No_7569 {
         }
 
         return day;
-        
+
     }
 }
