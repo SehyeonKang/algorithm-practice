@@ -1,12 +1,11 @@
-package baekjoon.Graph;
+package baekjoon.graph;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class No_24445 {
-
+public class No_24444 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
@@ -38,7 +37,6 @@ public class No_24445 {
 
         for (int i = 1; i < graph.size(); i++) {
             Collections.sort(graph.get(i));
-            Collections.reverse(graph.get(i));
         }
 
         bfs(startVertex);
@@ -46,6 +44,7 @@ public class No_24445 {
         for (int i = 1; i < visited.length; i++) {
             sb.append(visited[i]).append("\n");
         }
+
         System.out.println(sb);
     }
 

@@ -1,4 +1,4 @@
-package baekjoon.Graph;
+package baekjoon.graph;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,27 +7,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-public class No_24480 {
+public class No_24479 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
 
-    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-    static int[] check;
-    static int count;
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>(); // 정점들의 정보 저장
+    static int[] check; // 방문한 정점을 기록
+    static int count; //방문 순서
 
     public static void main(String[] args) throws IOException {
-
         st = new StringTokenizer(br.readLine());
 
         int vertex = Integer.parseInt(st.nextToken());
         int edge = Integer.parseInt(st.nextToken());
         int startVertex = Integer.parseInt(st.nextToken());
 
+        check = new int[vertex + 1];
+
         for (int i = 0; i < vertex + 1; i++) {
             graph.add(new ArrayList<>());
         }
-        check = new int[vertex + 1];
 
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
@@ -41,17 +41,17 @@ public class No_24480 {
 
         for (int i = 1; i < graph.size(); i++) {
             Collections.sort(graph.get(i));
-            Collections.reverse(graph.get(i));
         }
 
         count = 1;
         dfs(startVertex);
 
-        for (int i = 1; i < graph.size(); i++) {
+        for (int i = 1; i < check.length; i++) {
             sb.append(check[i]).append("\n");
         }
 
         System.out.println(sb);
+
     }
 
     private static void dfs(int vertex) {

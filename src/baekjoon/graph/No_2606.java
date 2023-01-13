@@ -1,11 +1,14 @@
-package baekjoon.Graph;
+package baekjoon.graph;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
-public class No_24444 {
+public class No_2606 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
@@ -14,11 +17,9 @@ public class No_24444 {
     static int[] visited;
 
     public static void main(String[] args) throws IOException {
-        st = new StringTokenizer(br.readLine());
 
-        int vertex = Integer.parseInt(st.nextToken());
-        int edge = Integer.parseInt(st.nextToken());
-        int startVertex = Integer.parseInt(st.nextToken());
+        int vertex = Integer.parseInt(br.readLine());
+        int edge = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < vertex + 1; i++) {
             graph.add(new ArrayList<>());
@@ -35,24 +36,22 @@ public class No_24444 {
             graph.get(toVertex).add(fromVertex);
         }
 
-        for (int i = 1; i < graph.size(); i++) {
-            Collections.sort(graph.get(i));
-        }
+        bfs(1);
 
-        bfs(startVertex);
-
+        int result = 0;
         for (int i = 1; i < visited.length; i++) {
-            sb.append(visited[i]).append("\n");
+            if (visited[i] == 1) {
+                result++;
+            }
         }
 
-        System.out.println(sb);
+        System.out.println(result);
     }
 
     private static void bfs(int vertex) {
-        int count = 1;
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(vertex);
-        visited[vertex] = count++;
+        visited[vertex] = 1;
 
         while (!queue.isEmpty()) {
             int fromVertex = queue.poll();
@@ -60,12 +59,12 @@ public class No_24444 {
             for (int i = 0; i < graph.get(fromVertex).size(); i++) {
                 int newVertex = graph.get(fromVertex).get(i);
 
-                if (visited[newVertex] != 0) {
+                if (visited[newVertex] == 1) {
                     continue;
                 }
 
                 queue.offer(newVertex);
-                visited[newVertex] = count++;
+                visited[newVertex] = 1;
             }
         }
     }

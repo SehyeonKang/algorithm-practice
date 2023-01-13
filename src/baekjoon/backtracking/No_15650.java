@@ -1,11 +1,11 @@
-package baekjoon.backTracking;
+package baekjoon.backtracking;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class No_15652 {
+public class No_15650 {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
@@ -13,6 +13,7 @@ public class No_15652 {
 
     static int N, M;
     static int[] arr;
+    static boolean[] visit;
 
     public static void main(String[] args) throws IOException {
 
@@ -22,6 +23,7 @@ public class No_15652 {
         M = Integer.parseInt(st.nextToken());
 
         arr = new int[M];
+        visit = new boolean[N];
 
         dfs(0);
 
@@ -39,12 +41,19 @@ public class No_15652 {
         }
 
         for (int i = 0; i < N; i++) {
-            if (depth == 0) {
-                arr[depth] = i + 1;
-                dfs(depth + 1);
-            } else if (arr[depth - 1] <= i + 1) {
-                arr[depth] = i + 1;
-                dfs(depth + 1);
+            if (!visit[i]) {
+                if (depth == 0) {
+                    arr[depth] = i + 1;
+                    visit[i] = true;
+                    dfs(depth + 1);
+                    visit[i] = false;
+
+                } else if (arr[depth - 1] < i + 1) {
+                    arr[depth] = i + 1;
+                    visit[i] = true;
+                    dfs(depth + 1);
+                    visit[i] = false;
+                }
             }
         }
     }

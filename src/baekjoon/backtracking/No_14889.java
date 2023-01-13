@@ -1,4 +1,4 @@
-package baekjoon.backTracking;
+package baekjoon.backtracking;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,8 @@ public class No_14889 {
     static StringTokenizer st;
 
     static int N, gap;
-    static int[] member;
+    //static int[] member;
+    static boolean[] member;
     static int[][] map;
 
     public static void main(String[] args) throws IOException {
@@ -20,7 +21,7 @@ public class No_14889 {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
 
-        member = new int[N];
+        member = new boolean[N];
         map = new int[N][N];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
@@ -31,12 +32,12 @@ public class No_14889 {
         }
 
         gap = Integer.MAX_VALUE;
-        dfs(0);
+        dfs(0, 0);
 
         System.out.println(gap);
     }
 
-    private static void dfs(int depth) {
+    private static void dfs(int index, int depth) {
 
         if (depth == N / 2) {
             int result = calculate();
@@ -52,11 +53,11 @@ public class No_14889 {
             return;
         }
 
-        for (int i = 0; i < N; i++) {
-            if (member[i] == 0) {
-                member[i] = 1;
-                dfs(depth + 1);
-                member[i] = 0;
+        for (int i = index; i < N; i++) {
+            if (!member[i]) {
+                member[i] = true;
+                dfs(i + 1, depth + 1);
+                member[i] = false;
             }
         }
     }
@@ -68,9 +69,9 @@ public class No_14889 {
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (member[i] == 0 && member[j] == 0) {
+                if (!member[i] && !member[j]) {
                     startTeam = startTeam + map[i][j];
-                } else if (member[i] == 1 && member[j] == 1) {
+                } else if (member[i] && member[j]) {
                     linkTeam = linkTeam + map[i][j];
                 }
             }

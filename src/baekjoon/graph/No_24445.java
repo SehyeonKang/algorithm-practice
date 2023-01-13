@@ -1,14 +1,12 @@
-package baekjoon.Graph;
+package baekjoon.graph;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
-public class No_2606 {
+public class No_24445 {
+
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
@@ -17,9 +15,11 @@ public class No_2606 {
     static int[] visited;
 
     public static void main(String[] args) throws IOException {
+        st = new StringTokenizer(br.readLine());
 
-        int vertex = Integer.parseInt(br.readLine());
-        int edge = Integer.parseInt(br.readLine());
+        int vertex = Integer.parseInt(st.nextToken());
+        int edge = Integer.parseInt(st.nextToken());
+        int startVertex = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i < vertex + 1; i++) {
             graph.add(new ArrayList<>());
@@ -36,22 +36,24 @@ public class No_2606 {
             graph.get(toVertex).add(fromVertex);
         }
 
-        bfs(1);
-
-        int result = 0;
-        for (int i = 1; i < visited.length; i++) {
-            if (visited[i] == 1) {
-                result++;
-            }
+        for (int i = 1; i < graph.size(); i++) {
+            Collections.sort(graph.get(i));
+            Collections.reverse(graph.get(i));
         }
 
-        System.out.println(result);
+        bfs(startVertex);
+
+        for (int i = 1; i < visited.length; i++) {
+            sb.append(visited[i]).append("\n");
+        }
+        System.out.println(sb);
     }
 
     private static void bfs(int vertex) {
+        int count = 1;
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(vertex);
-        visited[vertex] = 1;
+        visited[vertex] = count++;
 
         while (!queue.isEmpty()) {
             int fromVertex = queue.poll();
@@ -59,12 +61,12 @@ public class No_2606 {
             for (int i = 0; i < graph.get(fromVertex).size(); i++) {
                 int newVertex = graph.get(fromVertex).get(i);
 
-                if (visited[newVertex] == 1) {
+                if (visited[newVertex] != 0) {
                     continue;
                 }
 
                 queue.offer(newVertex);
-                visited[newVertex] = 1;
+                visited[newVertex] = count++;
             }
         }
     }
