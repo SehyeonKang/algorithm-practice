@@ -10,28 +10,24 @@ public class No_1912 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
-    static int[] arr;
-
     public static void main(String[] args) throws IOException {
         int n = Integer.parseInt(br.readLine());
-        arr = new int[n];
+        int[] arr = new int[n];
+        int[] dp = new int[n];
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        dp(n);
+        dp[0] = arr[0];
+        int max = arr[0];
 
-    }
-
-    private static long dp(int n) {
-        int[] subArr = new int[11];
-
-        for (int i = 1; i < n + 1; i++) {
-            subArr[i] =
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.max(dp[i - 1] + arr[i], arr[i]);
+            max = Math.max(dp[i], max);
         }
-    }
 
-    private static long calculate()
+        System.out.println(max);
+    }
 }
