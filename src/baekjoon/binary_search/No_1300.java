@@ -16,19 +16,18 @@ public class No_1300 {
         long hi = K;
 
         // lower-bound
-        while(lo < hi) {
+        while (lo < hi) {
 
             long mid = (lo + hi) / 2;
             long count = 0;
 
-            for(int i = 1; i <= N; i++) {
+            for (int i = 1; i <= N; i++) {
                 count += Math.min(mid / i, N);
             }
 
-            if(K <= count) {
+            if (K <= count) {
                 hi = mid;
-            }
-            else {
+            } else {
                 lo = mid + 1;
             }
         }
