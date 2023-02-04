@@ -22,7 +22,6 @@ public class No_12015 {
             seq[i] = Integer.parseInt(st.nextToken());
         }
 
-        // LIS 초기 값으로 첫 번째 수열의 값을 갖는다.
         LIS[0] = seq[0];
         int lengthOfLIS = 1;
 
@@ -38,8 +37,9 @@ public class No_12015 {
                 //Lower Bound
                 int lo = 0;
                 int hi = lengthOfLIS;
+
                 while (lo < hi) {
-                    int mid = (lo + hi) >>> 1;
+                    int mid = (lo + hi) / 2;
 
                     if(LIS[mid] < key) {
                         lo = mid + 1;
