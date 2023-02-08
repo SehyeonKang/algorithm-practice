@@ -1,4 +1,4 @@
-package baekjoon.Dijkstra;
+package baekjoon.short_path;
 
 import java.io.BufferedReader;
 import java.io.IOException;
