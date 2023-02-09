@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/**
+ * 다익스트라 알고리즘
+ */
 public class No_1753 {
 
     private static class Node implements Comparable<Node> {
