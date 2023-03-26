@@ -1,5 +1,8 @@
 package programmers.lv2;
 
+/**
+ * 올바른 괄호
+ */
 public class No_4 {
 
     public static void main(String[] args) {
