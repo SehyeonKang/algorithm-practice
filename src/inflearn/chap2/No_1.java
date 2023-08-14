@@ -1,10 +1,8 @@
-package inflearn;
+package inflearn.chap2;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 
-public class No_21 {
+public class No_1 {
     public String solution(int arr[]) {
         String answer = "";
 
@@ -22,7 +20,7 @@ public class No_21 {
     }
 
     public static void main(String[] args) {
-        No_21 T = new No_21();
+        No_1 T = new No_1();
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
