@@ -4,31 +4,35 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class No_9 {
-    public boolean count(int n, int size, int[] arr) {
-        for (int i = n - 1; i >= 0; i--) {
+    public int count(int capacity, int[] arr) {
+        int sum = 0;
+        int count = 1;
 
+        for (int x : arr) {
+            if (sum + x > capacity) {
+                count++;
+                sum = x;
+            } else
+                sum += x;
         }
+
+        return count;
     }
 
     public int solution(int n, int m, int[] arr) {
         int answer = 0;
-        int sum = 0;
-        int start = 0;
-        int end;
-        int mid;
-        Arrays.sort(arr);
+        int start = Arrays.stream(arr).max().getAsInt();
+        int end = Arrays.stream(arr).sum();
 
-        for (int x : arr) {
-            sum += x;
+        while (end >= start) {
+            int mid = (start + end) / 2;
+            if (count(mid, arr) <= m) {
+                answer = mid;
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
         }
-        end = sum;
-        mid = (start + end) / 2;
-
-        int min = Integer.MAX_VALUE;
-        while (end - start >= 0) {
-            if ()
-        }
-
 
         return answer;
     }
