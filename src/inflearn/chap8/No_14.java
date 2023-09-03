@@ -7,7 +7,7 @@ public class No_14 {
     static int n, m;
     static int count = 0;
     static int answer = Integer.MAX_VALUE;
-    static int[][] map, check;
+    static int[] combi;
     static ArrayList<Point> home = new ArrayList<>();
     static ArrayList<Point> pizza = new ArrayList<>();
 
@@ -21,45 +21,23 @@ public class No_14 {
         }
     }
 
-    public void calculate() {
-        int sum = 0;
-
-        for (Point h : home) {
-            int dis = Integer.MAX_VALUE;
-
-            for (Point p : pizza) {
-                if (check[p.x][p.y] == 1)
-                    dis = Math.min(dis, Math.abs(h.x - p.x) + Math.abs(h.y - p.y));
+    public void dfs(int L, int s) {
+        if (L == m) {
+            int sum = 0;
+            for (Point h : home) {
+                int dis = Integer.MAX_VALUE;
+                for (int i : combi) {
+                    dis = Math.min(dis, Math.abs(h.x - pizza.get(i).x) + Math.abs(h.y - pizza.get(i).y));
+                }
+                sum += dis;
             }
-            sum += dis;
+            answer = Math.min(answer, sum);
+        } else {
+            for (int i = s; i < pizza.size(); i++) {
+                combi[L] = i;
+                dfs(L + 1, i + 1);
+            }
         }
-        answer = Math.min(answer, sum);
-    }
-
-    public void dfs(int L) {
-        if (count == m) {
-            calculate();
-            return;
-        }
-
-        if (L == pizza.size()) {
-            if (count == m)
-                calculate();
-
-            return;
-        }
-
-        if (L - count > pizza.size() - m)
-            return;
-
-        Point point = pizza.get(L);
-
-        check[point.x][point.y] = 1;
-        count++;
-        dfs(L + 1);
-        check[point.x][point.y] = 0;
-        count--;
-        dfs(L + 1);
     }
 
     public static void main(String[] args) {
@@ -67,23 +45,21 @@ public class No_14 {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
-        map = new int[n][n];
-        check = new int[n][n];
-
+        combi = new int[m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                map[i][j] = sc.nextInt();
+                int tmp = sc.nextInt();
 
-                if (map[i][j] == 1)
+                if (tmp == 1)
                     home.add(new Point(i, j));
 
-                if (map[i][j] == 2)
+                if (tmp == 2)
                     pizza.add(new Point(i, j));
 
             }
         }
 
-        T.dfs(0);
+        T.dfs(0, 0);
 
         System.out.println(answer);
     }
